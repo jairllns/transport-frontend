@@ -1,0 +1,150 @@
+
+<div class="cl-mcont">
+    <div>
+
+        
+           
+            <button class="btn btn-primary btn-flat md-trigger" (click)="showForm = true">Registrar Empresa</button>
+                            
+                <div >
+
+
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th >Nombre</th>
+                                <th >Tipo Documento</th>
+                                <th >Num Documento</th>
+                                <th >Dirección</th>
+                                <th >Pais</th>
+                                <th >Departamento</th>
+                                <th >Ciudad</th>
+                                <th >Representante Legal</th>
+                                <th >Acción</th>
+                           
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let company of companyList">
+                            <td>{{company.nombre}}</td>
+                            <td>{{company.tipoDocumento}}</td>
+                            <td>{{company.numDocumento}}</td>
+                            <td>{{company.direccion}}</td>
+                            <td>{{company.pais}}</td>
+                            <td>{{company.departamento}}</td>
+                            <td>{{company.ciudad}}</td>
+                            <td>{{company.representanteLegal.nombre}}</td>
+                            <td><a (click)=" chargeForm( company );">Editar</a></td>
+                          
+                        </tr>
+                          
+                        </tbody>
+                    </table>
+                </div>
+            
+       
+     
+    <div *ngIf="showForm" class="row" >
+       
+     
+      <div class="col-md-2">&nbsp;</div>
+      <div class="col-md-8">
+        <h1> Diligenciar Formulario</h1> 
+        <form class="form form-horizontal" [formGroup]="form" >
+            <div class="row g-3">
+                
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tipo Documento*</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" formControlName="tipoDocumento">
+                            <option  *ngFor="let type of tipoDocumentoList | keyvalue" [value]="type.key">{{type.key}}-{{type.value}}</option>
+                         </select>
+                        <div *ngIf="isFieldInvalid('tipoDocumento')"> Por favor ingresar el tipo documento de la empresa </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Numero Documento*</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Numero Documento" formControlName="numeroDocumento">
+                        <div *ngIf="isFieldInvalid('numeroDocumento')"> Por favor ingresar el numero documento de la empresa </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Nombre*</label>
+                    <div class="col-sm-10">
+                        <input type="name" class="form-control" placeholder="Nombre" formControlName="nombre">
+                        <div *ngIf="isFieldInvalid('nombre')"> Por favor ingresar el nombre de la empresa </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Dirección*</label>
+                    <div class="col-sm-10">
+                        <input type="name" class="form-control" placeholder="Dirección" formControlName="direccion">
+                        <div *ngIf="isFieldInvalid('direccion')"> Por favor ingresar la dirección de la empresa </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Ciudad*</label>
+                    <div class="col-sm-10">
+                        <input type="name" class="form-control" placeholder="Ciudad" formControlName="ciudad">
+                        <div *ngIf="isFieldInvalid('ciudad')"> Por favor ingresar la ciudad de la empresa </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Departamento*</label>
+                    <div class="col-sm-10">
+                        <input type="name" class="form-control" placeholder="Departamento" formControlName="departamento">
+                        <div *ngIf="isFieldInvalid('departamento')"> Por favor ingresar el departamento de la empresa </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Pais*</label>
+                    <div class="col-sm-10">
+                        <input type="name" class="form-control" placeholder="Pais" formControlName="pais">
+                        <div *ngIf="isFieldInvalid('pais')"> Por favor ingresar el pais de la empresa </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Telefono*</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="Telefono" formControlName="telefono">
+                        <div *ngIf="isFieldInvalid('telefono')"> Por favor ingresar el telefono de la empresa </div>
+                    </div>
+                </div>
+                
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Representante Legal*</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" formControlName="representanteLegalId">
+                            <option value="" *ngIf="representanLegalList.length == 0"  >No existen representante legal registrados...</option>
+                            <option value="" *ngIf="representanLegalList.length > 0"  >Seleccione un representante legal...</option>
+                            <option  value="{{rel.id}}" *ngFor="let rel of representanLegalList">{{rel.nombre}}</option>
+                         </select>
+                         <div *ngIf="isFieldInvalid('representanteLegalId')"> Por favor ingresar el representante legal de la empresa </div>
+                         
+                        </div>
+                </div>
+
+                
+                <div class="form-group">
+                <button type="button" class="btn btn-default btn-flat md-close" (click)="showForm = false; clearForm();">Cancelar</button>
+                <button type="submit" class="btn btn-primary btn-flat md-close" data-dismiss="modal" (click)="saveCompany(form)">Guardar</button>
+            </div>
+            </div>
+    
+        </form>
+    </div>
+    <div class="col-md-2">&nbsp;</div>
+    </div>
+</div>
+</div>

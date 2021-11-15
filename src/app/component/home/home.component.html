@@ -1,0 +1,10 @@
+<mat-toolbar>
+    <span routerLink="/">Transport App</span>
+    <div style=" flex: 1 1 auto;">
+    <button mat-button [matMenuTriggerFor]="menu" mat-button color="primary">Opciones </button>
+    <mat-menu #menu="matMenu">
+    <button mat-menu-item routerLink="/createCompany">Crear Empresa</button>
+
+    </mat-menu>
+    </div>
+  </mat-toolbar>
